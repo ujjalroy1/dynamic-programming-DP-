@@ -1,0 +1,42 @@
+#include <bits/stdc++.h> 
+int mx=100000000;
+int func(vector<int>&num,int n,int x,vector<vector<int>>&dp)
+{
+   // cout<<n<<" "<<x<<endl;
+     if(n<0)
+     {
+         return mx;
+     }
+     if(x==num[n])return 1;
+     if(n==0&&x<=num[n])
+     {
+         if(num[n]==x)return 1;
+         return mx;
+     }
+     if(dp[n][x]!=-1)return dp[n][x];
+     int ans=mx;
+     ans=func(num,n-1,x,dp);
+     int ans1=mx;
+     if(x-num[n]>=0) ans1=1+func(num,n-1,x-num[n],dp);
+     int ans2=mx;
+     if(x-num[n]>=0)
+     {
+         ans2=1+func(num,n,x-num[n],dp);
+     }
+     return dp[n][x]=min(ans,min(ans1,ans2));
+
+
+}
+int minimumElements(vector<int> &num, int x)
+{
+    // Write your code here.
+     int n=num.size();
+    vector<vector<int>>dp(n,vector<int>(x+1,-1));
+    if(x==0)return 0;
+   // cout<<func(num,n,x,dp)<<endl;
+   int r=func(num,n-1,x,dp);
+  // cout<<r<<endl;
+    if(r==100000000)return -1;
+    else
+    return func(num,n-1,x,dp);
+}
