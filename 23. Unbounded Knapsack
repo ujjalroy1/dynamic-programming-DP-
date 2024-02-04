@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+using namespace std;
+int func(int n,int wt,vector<int>&p,vector<int>&w,vector<vector<int>>&dp)
+{
+    if(n==0)
+    {
+        return (wt/w[n])*p[n];
+    }
+    if(dp[n][wt]!=-1)return dp[n][wt];
+    int nottake=func(n-1,wt,p,w,dp);
+    int take=0;
+    if(wt-w[n]>=0)
+    {
+        take=p[n]+func(n,wt-w[n],p,w,dp);
+    }
+    return dp[n][wt]=max(take,nottake);
+}
+int unboundedKnapsack(int n, int w, vector<int> &profit, vector<int> &weight)
+{
+    // Write Your Code Here.
+    vector<vector<int>>dp(n,vector<int>(w+10,-1));
+
+    return func(n-1,w,profit,weight,dp);
+
+
+}
