@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+int func(int n,int m,string &str,string &s,vector<vector<int>>&dp)
+{
+	if(n<0||m<0)return 0;
+	if(dp[n][m]!=-1)return dp[n][m];
+	if(str[n]==s[m])
+	{
+		 return 1+func(n-1,m-1,str,s,dp);
+	}
+	return dp[n][m]=max(func(n-1,m,str,s,dp),func(n,m-1,str,s,dp));
+}
+int minimumInsertions(string &str)
+{
+	int n;
+	n=str.size();
+    string s;
+	s=str;
+	reverse(s.begin(),s.end());
+	vector<vector<int>>dp(n,vector<int>(n,-1));
+
+
+	return (n-func(n-1,n-1,str,s,dp));
+}
