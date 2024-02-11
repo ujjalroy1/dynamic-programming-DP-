@@ -1,0 +1,64 @@
+#include <bits/stdc++.h> 
+using namespace std;
+string shortestSupersequence(string a, string b)
+{
+	
+	  string s="";
+	  int n,m,i,j;
+	  n=a.size();
+	  m=b.size();
+	  a="#"+a;
+	  b="#"+b;
+	  int dp[n+1][m+1];
+	  memset(dp, 0, sizeof(dp));
+	  for(i=1;i<=n;i++)
+	  {
+		   for(j=1;j<=m;j++)
+		   {
+             
+			    if(a[i]==b[j])
+				{
+                     //cout<<a[i]<<" "<<b[j]<<endl;
+					dp[i][j]=1+dp[i-1][j-1];
+                   // cout<<dp[i][j]<<endl;
+				}
+	           else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+		   }
+	  }
+      i=n;
+      j=m;
+      while(i>0&&j>0)
+      {
+
+         if(a[i]==b[j])
+         {
+             s+=a[i];
+             i--;
+             j--;
+         }
+         else if(dp[i-1][j]>dp[i][j-1])
+         {
+              s+=a[i];
+              i--;
+         }
+         else 
+         {
+              s+=b[j];
+              j--;
+         }
+
+      }
+      while(j>0)
+      {
+          s+=b[j];
+          j--;
+      }
+      while(i>0)
+      {
+         s+=a[i];
+         i--;
+      }
+      reverse(s.begin(),s.end());
+	  return s;
+
+}
