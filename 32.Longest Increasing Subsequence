@@ -1,0 +1,29 @@
+class Solution {
+public:
+     int func(int i,int j,vector<int>&arr,vector<vector<int>>&dp)
+     {
+          if(i==0)
+          {
+              if(arr[j]>arr[i])return 1;
+              return 0;
+          }
+          if(dp[i][j]!=-1)return dp[i][j];
+         int mx=0;
+          if(arr[j]>arr[i])
+          {
+              mx=1+func(i-1,i,arr,dp);
+          }
+          mx=max(mx,func(i-1,j,arr,dp));
+          return dp[i][j]=mx;
+     }
+    int lengthOfLIS(vector<int>& nums) 
+    {
+          int n=nums.size();
+         nums.push_back(100000);
+
+        vector<vector<int>>dp(n+2,vector<int>(n+2,-1));
+        return func(n-1,n,nums,dp);
+        
+
+    }
+};
